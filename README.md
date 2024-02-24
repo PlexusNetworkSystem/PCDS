@@ -10,7 +10,9 @@ By a human to humanity
 
 ## Objectives
 
-The project goal is to deliver content quickly and securely over the HTTP protocol.
+The project's aim is to provide a comprehensive Content Delivery Network (CDN) solution called the PCDN System. This system aims to streamline and optimize the process of delivering content to end-users worldwide. It targets developers, content creators, and business owners, offering an innovative technology and a user-friendly interface to enhance overall performance.
+
+Key features of the PCDN System include efficient content delivery, caching mechanisms to improve delivery speed, built-in security features for secure content delivery, detailed analytics for insights into performance, scalability to easily adapt to changing demands, API integration for custom solutions, and customization options to tailor the system to specific content delivery requirements. Overall, the goal is to provide a seamless experience for managing content delivery needs and empower users to optimize their workflows.
 
 ## WebSite
 [https://cdn.plexusteam.org](https://cdn.plexusteam.org)
