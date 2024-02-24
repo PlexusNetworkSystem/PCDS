@@ -1,4 +1,4 @@
-<img width="256px" align="right" src="icon.png" alt="TOML logo">
+<img width="256px" align="right" src="icon.png" alt="PCDN">
 
 # PCDN
 
