@@ -27,4 +27,5 @@ The project goal is to deliver content quickly and securely over the HTTP protoc
 | API Integration   | Seamlessly integrate with the CDN API for custom solutions.           |
 | Customization     | Tailor the system to meet your specific content delivery requirements. |
 
-
+------------ 
+Developed by [Abra](https://github.com/the-abra "Abra")
