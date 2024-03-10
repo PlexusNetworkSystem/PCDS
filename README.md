@@ -1,32 +1,32 @@
-<img width="256px" align="right" src="icon.png" alt="PCDN">
+<img width="256px" align="right" src="icon.png" alt="PCDS">
 
-# PCDN
+# PCDS
 
-CDN with API and Plexus system
+cds with API and Plexus system
 
 By a human to humanity
 
-> Just CDN Tech, fast - simple - lite and it's can delivery contents. (It's all a matter of luck, it works as it pleases)
+> Just cds Tech, fast - simple - lite and it's can delivery contents. (It's all a matter of luck, it works as it pleases)
 
 ## Objectives
 
-The project's aim is to provide a comprehensive Content Delivery Network (CDN) solution called the PCDN System. This system aims to streamline and optimize the process of delivering content to end-users worldwide. It targets developers, content creators, and business owners, offering an innovative technology and a user-friendly interface to enhance overall performance.
+The project's aim is to provide a comprehensive Content Delivery System (cds) solution called the PCDS. This system aims to streamline and optimize the process of delivering content to end-users worldwide. It targets developers, content creators, and business owners, offering an innovative technology and a user-friendly interface to enhance overall performance.
 
-Key features of the PCDN System include efficient content delivery, caching mechanisms to improve delivery speed, built-in security features for secure content delivery, detailed analytics for insights into performance, scalability to easily adapt to changing demands, API integration for custom solutions, and customization options to tailor the system to specific content delivery requirements. Overall, the goal is to provide a seamless experience for managing content delivery needs and empower users to optimize their workflows.
+Key features of the PCDS System include efficient content delivery, caching mechanisms to improve delivery speed, built-in security features for secure content delivery, detailed analytics for insights into performance, scalability to easily adapt to changing demands, API integration for custom solutions, and customization options to tailor the system to specific content delivery requirements. Overall, the goal is to provide a seamless experience for managing content delivery needs and empower users to optimize their workflows.
 
 ## WebSite
-[https://cdn.plexusteam.org](https://cdn.plexusteam.org)
+[https://cds.plexusteam.org](https://cds.plexusteam.org)
 
 ## Features
 
 | Feature           | Description                                                |
 |-------------------|------------------------------------------------------------|
-| Content Delivery  | PCDN System efficiently delivers content to end-users worldwide.   |
+| Content Delivery  | PCDS System efficiently delivers content to end-users worldwide.   |
 | Caching           | Utilize caching mechanisms to improve content delivery speed.       |
 | Security          | Ensure secure content delivery with built-in security features.      |
 | Analytics         | Gain insights into content delivery performance with detailed analytics. |
 | Scalability       | Easily scale your content delivery infrastructure based on demand.   |
-| API Integration   | Seamlessly integrate with the CDN API for custom solutions.           |
+| API Integration   | Seamlessly integrate with the cds API for custom solutions.           |
 | Customization     | Tailor the system to meet your specific content delivery requirements. |
 
 ## Used Langs and Techs
