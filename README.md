@@ -2,7 +2,7 @@
 
 # PCDS
 
-cds with API and Plexus system
+Content delivery System with API and Plexus system
 
 By a human to humanity
 
