@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Docs | PCDS System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet subresource">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet subresource">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/docs.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}" type="image/x-icon">
+
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="sidebar">
+        <a class="sidebar-toggle waves-effect" href="#">Sidebar Toggle</a>
+        <ul class="sidebar-menu custom-scrollbar">
+            <li>
+                <a href="/docs/welcome" class="waves-effect">
+                    <i class="material-icons">dashboard</i>
+                    Intro
+                </a>
+            </li>
+            <li class="active">
+                <a href="#API" class="waves-effect">
+                    <i class="material-icons">link</i>
+                    API Usage
+                </a>
+                <ul>
+                    <li>
+                        <a href="/docs/api-usage/struct" class="waves-effect">
+                            <i class="material-icons">build</i>
+                            Struct
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/docs/api-usage/getContent" class="waves-effect">
+                            <i class="material-icons">download</i>
+                            Get Content
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/docs/api-usage/uploadContent" class="waves-effect">
+                            <i class="material-icons">cloud</i>
+                            Upload Content
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/docs/api-usage/deleteContent" class="waves-effect">
+                            <i class="material-icons">delete</i>
+                            Delete Content
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/docs/api-usage/listContent" class="waves-effect">
+                            <i class="material-icons">list</i>
+                            List Content
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/docs/api-usage/unLocking" class="waves-effect">
+                            <i class="material-icons">lock</i>
+                            Unlock Content
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="wrapper">
+        <header>
+            <div class="container">
+                <div class="header-content content-wrapper">
+                    <div class="header-title">
+                        <h1>PCDS Instruction manual</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="body custom-scrollbar">
+            <div class="container">
+                <div class="markdown content-wrapper">
+                {{ content }}
+                </div>
+            </div>
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content content-wrapper">
+                    <p>&copy; 2024 PNA Team. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+        </div>
+        <!-- partial -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.6.3/showdown.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js'></script>
+        <script src="{{ url_for('static', filename='script/docs.js') }}"></script>
+        
+
+    </div>
+
+</body>
+
+</html>
