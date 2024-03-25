@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}" type="image/x-icon">
+    <title>Login</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.2.1/font-awesome-animation.min.css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/login.css') }}">
+</head>
+<body>
+    <div class="login">
+
+        <header class="login__header">
+            <h2><svg class="icon">
+                    <use xlink:href="#icon-lock" />
+                </svg>Sign In</h2>
+        </header>
+
+        <form action="/panel" class="login__form" method="POST">
+
+            <div>
+                <label for="username">User name</label>
+                <input type="text" id="username" name="username" placeholder="Admin etc.">
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="123456...">
+            </div>
+
+            <div>
+                <input class="button" type="submit" value="Sign In">
+            </div>
+
+        </form>
+
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="icons">
+        <symbol id="icon-lock" viewBox="0 0 448 512">
+            <path
+                d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z" />
+        </symbol>
+    </svg>
+    
+        {% if loginfail and not logout %}
+        <div class="alert fade alert-simple alert-danger alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show"
+            role="alert" data-brk-library="component__alert">
+            <i class="start-icon far fa-times-circle faa-pulse animated"></i>
+            <strong class="font__weight-semibold">Opss!</strong> {{ message }}
+        </div>
+        {% endif %}
+        {% if logout and message %}
+        <div class="alert fade alert-simple alert-success alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show">
+            <i class="start-icon far fa-check-circle faa-tada animated"></i>
+            <strong class="font__weight-semibold">Well done!</strong> {{ message }}.
+        </div>
+        {% endif %}
+
+</body>
+</html>

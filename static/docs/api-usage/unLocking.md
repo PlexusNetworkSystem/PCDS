@@ -11,6 +11,8 @@ To unlcok content, you have to send JSON values as `json_data`. Here is an examp
                 }
 ```
 
+> Content Type: **`application/json`**
+
 | Parameter  | Description                   | Required | 
 |------------|-------------------------------|----------|
 | secret_key | Your secret key for access    | Yes      |

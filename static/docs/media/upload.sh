@@ -1,7 +1,7 @@
  #Client area
  token="2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
  secret_key="123456"
- apiEndpoint="http://cds.plexusteam.org/api/$token"
+ apiEndpoint="http://cds.test.org/api/$token"
  force='false'
  subDir="/"
  #Client area
@@ -51,18 +51,20 @@ fi
  [[ -f "$file" ]] || { echo -e "404 File Not Found"; exit 1; }
 
 
- # Create a temporary JSON file with the required data
-json_data=$(cat <<EOF
+# Prepare the JSON data
+jsonData=$(cat <<EOF
 {
-"secret_key": "$secret_key",
-"procClass": "upload",
-"subDir": "$subDir",
-"force": $force
+ "secret_key": "$secret_key",
+ "procClass": "upload",
+ "subDir": "$subDir",
+ "force": $force
 }
 EOF
 )
-temp_json_file=$(mktemp)
-echo "$json_data" > "$temp_json_file"
 
- # Send the file with the temporary JSON file
-curl -X POST -H "Content-Type: multipart/form-data" -F "file=@$file" -F "json_data=@$temp_json_file" $apiEndpoint
+# Send the POST request with the JSON data and file
+curl -X POST "$apiEndpoint" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@$file" \
+     -F "jsonData=$jsonData"
+

@@ -11,6 +11,9 @@ To upload content, you have to send JSON values as `json_data`. Here is an examp
                 }
 ```
 
+> Content Type: **`multipart/form-data`**
+
+
 | Parameter  | Description                   | Required | 
 |------------|-------------------------------|----------|
 | secret_key | Your secret key for access    | Yes      |

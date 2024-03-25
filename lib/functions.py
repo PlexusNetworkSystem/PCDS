@@ -30,4 +30,13 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'webm', 'lock'}
 
 
-
+def get_distro_info():
+    distro_info = {}
+    with open('/etc/os-release', 'r') as f:
+        for line in f:
+            if '=' in line:
+                key, value = line.strip().split('=', 1)
+                # Remove quotes from value if present
+                value = value.strip('"')
+                distro_info[key.lower()] = value
+    return distro_info

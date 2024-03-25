@@ -1,0 +1,159 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCDS Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/panel.css') }}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body>
+    <div class="main-panel">
+        <div class="header">
+            <h1>Dashboard</h1>
+            <form action="/panel" method="POST">
+                <input class="senddata" value="{{ token }}" name="token">
+                <input class="senddata" value="panel" name="client">
+                <input class="senddata" value="logout" name="process">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+        <div class="main-board">
+            <div class="connect">
+                <h3>You can connect to server with this IP</h3>
+                <li id="header_ip">Loading...</li>
+            </div>
+            <div class="resources">
+                <h3>Resource Usage:</h3>
+                <div class="crd flex">
+                    <div class="cpu">
+                        <div class="cpu-alt flex">
+                            <h3>CPU</h3>
+                            <span id="cpu_usage">Loading...</span>
+                        </div>
+                        <progress id="cpu_usage_bar" value="0" max="100"></progress>
+                    </div>
+                    <div class="ram">
+                        <div class="ram-alt flex">
+                            <h3>RAM</h3>
+                            <span id="ram_usage">Loading...</span>
+                        </div>
+                        <progress id="ram_usage_bar" value="0" max="100"></progress>
+                    </div>
+                    <div class="disk">
+                        <div class="disk-alt flex">
+                            <h3>DISK</h3>
+                            <span id="disk_usage">Loading...</span>
+                        </div>
+                        <progress id="disk_usage_bar" value="0" max="100"></progress>
+                    </div>
+                </div>
+            </div>
+            <div class="service">
+                <div class="m10l full s-infos">
+                    <h3>Software Information:</h3>
+                    <div class="s-info-table">
+                        <table>
+                            <tr>
+                                <th>Software Name</th>
+                                <th id="software_name">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <th id="software_status">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>Version</th>
+                                <th id="software_version">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>Environment</th>
+                                <th id="software_env">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>Runing as</th>
+                                <th id="software_running_user">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>Port</th>
+                                <th id="software_port">Loading...</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="m10l full s-control">
+                    <h3>Service Control:</h3>
+                    <div class="control-panel">
+                        <div class="suspend">
+                            <div class="Suspentton">
+                                <button type="button" onclick="suspend()">
+                                    <span class="material-symbols-rounded">
+                                        dark_mode
+                                    </span>
+                                </button>
+                            </div>
+                            Suspend
+                        </div>
+                        <div class="wake-up">
+                            <div class="waketton">
+                                <button type="button" onclick="wakeup()">
+                                    <span class="material-symbols-rounded">
+                                        bolt
+                                    </span>
+                                </button>
+                            </div>
+                            Wake up
+                        </div>
+                    </div>
+                </div>
+                <div class="full node-info">
+                    <h3>Server Information:</h3>
+                    <div class="s-info-table">
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th id="server_name">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <th id="server_location">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>OS</th>
+                                <th id="server_specs_os">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>CPU</th>
+                                <th id="server_specs_cpu">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>GPU</th>
+                                <th id="server_specs_gpu">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>RAM</th>
+                                <th id="server_specs_ram">Loading...</th>
+                            </tr>
+                            <tr>
+                                <th>Disk</th>
+                                <th id="server_specs_disk">Loading...</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="frame-container">
+        <iframe allowfullscreen width="300" src="/selfdestruct/{{ token }}" frameborder="0"></iframe>
+    </div>
+    <script>
+        var token = "{{ token }}";
+    </script>
+    <script src="{{ url_for('static', filename='script/panel.js') }}"></script>
+</body>
+
+</html>

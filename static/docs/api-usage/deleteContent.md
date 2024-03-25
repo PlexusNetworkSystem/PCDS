@@ -10,7 +10,7 @@ Ex:
                 "procClass": "delete"
                 }
 ```
-> Content Type: **`multipart/form-data`**
+> Content Type: **`application/json`**
 
 | Parameter  | Description                   | Required | 
 |------------|-------------------------------|----------|

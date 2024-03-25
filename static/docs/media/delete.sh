@@ -37,8 +37,9 @@ fi
 
 [[ -z "$deleteFile" ]]  && echo -e "You have to set file name!" && exit 1
 
-# Create a temporary JSON file with the required data
-json_data=$(cat <<EOF
+
+# Send the file with the temporary JSON file
+jsonData=$(cat <<EOF
 {
   "secret_key": "$secretKey",
   "file": "$deleteFile",
@@ -47,10 +48,10 @@ json_data=$(cat <<EOF
 }
 EOF
 )
-temp_json_file=$(mktemp)
-echo "$json_data" > "$temp_json_file"
 
-# Send the file with the temporary JSON file
-curl -X POST -H "Content-Type: multipart/form-data" -F "json_data=@$temp_json_file" $apiEndpoint
+# Send the POST request with the JSON data
+curl -X POST "$apiEndpoint" \
+     -H "Content-Type: application/json" \
+     -d "$jsonData"
 #Danger zone
 

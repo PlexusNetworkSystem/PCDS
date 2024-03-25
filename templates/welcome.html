@@ -10,18 +10,15 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
+            background-color: #121212;
+            color: #f8f9fa;
             text-align: center;
             display: block;
             justify-content: center;
             align-items: center;
             position: relative;
-            /* Add this line */
-            min-height: 100vh;
-            /* Add this line */
+            overflow: hidden;
         }
-
         h1 {
             margin-top: 20%;
             font-size: 36px;
@@ -51,17 +48,29 @@
             height: 40px;
 
         }
+        .left-icon {
+            position: fixed;
+            bottom: -20px;
+            left: -20px;
+            width: 120px;
+            height: 120px;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Welcome to PCDS System</h1>
+    <h1>Welcome to PCDS</h1>
     <p>Various errors, system vulnerabilities and slowdown in content delivery may occur</p>
     <a href="/docs" class="btn">Get Started</a>
+    <a href="/panel" class="btn">Panel</a>
     <a href="https://github.com/PlexusNetworkSystem/PCDS" target="_blank">
-    <img class="github-icon" src="{{ url_for('static', filename='img/github-mark.png') }}" alt="GitHub">
+    <iframe src="/anim/spin" class="left-icon" frameborder="0"></iframe>
+    <!--<img class="left-icon" src="{{ url_for('static', filename='img/icon.png') }}" alt="GitHub">-->
+    <img class="github-icon" src="{{ url_for('static', filename='img/github-mark-white.png') }}" alt="GitHub">
     </a>
-
+    <script>
+        
+    </script>
 </body>
 
 </html>

@@ -61,8 +61,7 @@ fi
 
 
 
-# Create a temporary JSON file with the required data
-json_data=$(cat <<EOF
+jsonData=$(cat <<EOF
 {
   "secret_key": "$secretKey",
   "file": "$requestFile",
@@ -71,11 +70,13 @@ json_data=$(cat <<EOF
 }
 EOF
 )
-temp_json_file=$(mktemp)
-echo "$json_data" > "$temp_json_file"
 
-# Send the file with the temporary JSON file
-curl -X POST -H "Content-Type: multipart/form-data" -F "json_data=@$temp_json_file" $apiEndpoint --output "$savePath/$outputFile" &> /dev/null
+# Send the POST request with the JSON data
+curl -X POST "$apiEndpoint" \
+     -H "Content-Type: application/json" \
+     -d "$jsonData" \
+     --output "$savePath/$outputFile" &> /dev/null
+
 # Check if the file exists
 if ! [[ -f "$savePath/$outputFile" ]] || [[ $(strings "$savePath/$outputFile") =~ ('ERROR'|'Invalid'|'Not Found'|'404'|'message') ]]; then
     cat "$savePath/$outputFile"

@@ -10,7 +10,7 @@ Send json values as `json_data`.
                 "subDir": "/"
                 }
 ```
-> Content Type: **`multipart/form-data`**
+> Content Type: **`application/json`**
 
 | Parameter  | Description                   | Required | 
 |------------|-------------------------------|----------|

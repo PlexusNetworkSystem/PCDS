@@ -14,18 +14,19 @@ if [ $? -ne 0 ]; then
 fi
 
 # Create a temporary JSON file with the required data
-json_data=$(cat <<EOF
+jsonData=$(cat <<EOF
 {
   "secret_key": "$secretKey",
-  "procClass": "download",
-  "file": ""
+  "file": "",
+  "procClass": "download"
 }
 EOF
 )
-temp_json_file=$(mktemp)
-echo "$json_data" > "$temp_json_file"
-# Send the file with the temporary JSON file
-curl -X POST -H "Content-Type: multipart/form-data" -F "json_data=@$temp_json_file" $apiEndpoint 
+
+# Send the POST request with the JSON data
+curl -X POST "$apiEndpoint" \
+     -H "Content-Type: application/json" \
+     -d "$jsonData"
 
 #Danger zone
 

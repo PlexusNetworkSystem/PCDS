@@ -1,7 +1,7 @@
-import json, configparser, time, os, datetime 
+import json, configparser, time, os, datetime, psutil, GPUtil, cpuinfo, re, socket, platform, requests, zipfile, shutil
 from flask import Flask, send_file, render_template, jsonify, request, redirect, session
 from flask.sessions import SecureCookieSessionInterface
-from lib.functions import log, totalLog, check_login, allowed_file
+from lib.functions import log, totalLog, check_login, allowed_file, get_distro_info
 from datetime import timedelta
 from werkzeug.utils import secure_filename
 from lib.encryption import encrypt_file, decrypt_file, encrypt_data, decrypt_data, secure_compare, generate_sha512_hash, generate_sha256_hash
@@ -22,20 +22,40 @@ app.config.update(
 )
 app.permanent_session_lifetime = timedelta(hours=24)
 
+#--------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Shell connection side
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Updates checking and auto update side
+
+#--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 @app.route('/')
 def root():
+    with open('status.log', 'r') as f:
+        if f.read().strip() == 'suspend':
+            return render_template("suspend.html"), 503
     return render_template("welcome.html")
 
 @app.route('/docs')
 @app.route('/docs/')
 def routetodocs():
+    with open('status.log', 'r') as f:
+        if f.read().strip() == 'suspend':
+            return render_template("suspend.html"), 503
     return redirect('/docs/welcome')
 
 @app.route('/docs/<path:docname>')
 def usage_docs(docname):
+    with open('status.log', 'r') as f:
+        if f.read().strip() == 'suspend':
+            return render_template("suspend.html"), 503
     if "media" in docname:
          if not os.path.exists(f'static/docs/{docname}'):
             return render_template("notfound.html")
@@ -46,23 +66,34 @@ def usage_docs(docname):
     file = open(f'static/docs/{docname}.md').read().strip()
     return render_template('docs.html', content=file)
 
+@app.route('/anim/<chs>')
+def anim(chs):
+    with open('status.log', 'r') as f:
+        if f.read().strip() == 'suspend':
+            return jsonify({'message': '[500] Bad Request | System Suspended'}), 503
+    return render_template(f"animation/{chs}.html")
 
 #api
 @app.route('/api/<token>', methods=['POST'])
 def apisystem(token):
+        with open('status.log', 'r') as f:
+            if f.read().strip() == 'suspend':
+                return jsonify({'message': '[500] Bad Request | System Suspended'}), 503
         start_time = time.time()  # Start time for response time calculation
         if request.headers.getlist("X-Forwarded-For"):
             client_ip = request.headers.getlist("X-Forwarded-For")[0]
         else:
             client_ip = request.remote_addr
-        if 'json_data' not in request.files:
-            return jsonify({'error': 'Missing json_data part'}), 400
 
-        json_data = request.files.get('json_data')  # Use .get() to handle NoneType
-        if json_data is None or json_data.filename == '':
-            return jsonify({'error': 'No json_data file selected'}), 400
+        if not request.is_json and 'jsonData' not in request.form:
+            return jsonify({'error': 'Missing JSON in request'}), 400
+        
+        json_data_str = request.form.get('jsonData')
+        if json_data_str:
+            data = json.loads(json_data_str)
+        else:
+            data = request.get_json()
 
-        data = json.load(json_data.stream)
         recive_secret_key = data.get('secret_key')
         force = data.get('force')  # Use this for uploading file
         subDir = data.get('subDir')
@@ -226,6 +257,7 @@ def apisystem(token):
             elif procClass == "hash":
                 totalLog(token)
                 file = data.get('file')
+                print(file)
                 if "/" in file:
                     return jsonify({'message': '[500] You can not set path in filename','suggest': 'use "subDir: <path>"'}), 500
                 if not file or file == 'null' or not os.path.exists(f'box/{token}/root/{subDir}{file}') or file.endswith(".lock"):
@@ -248,8 +280,152 @@ def apisystem(token):
             return jsonify({'message': 'Access denied! Invalid key.', 'response_time': response_time, 'IP': client_ip}), 401
 #api end
 
+
+#Panel
+
+@app.route('/selfdestruct/<tokenv>', methods=['GET', 'POST'])
+def selfdestruct(tokenv):
+    if not tokenv == config.get('Login', 'token'):
+        return jsonify({'error': '[401] Unauthorized', 'message': 'Invalid Token'}), 401
+    else:
+        return render_template("sd.html", token=tokenv), 200
+
+@app.route('/panel', methods=['GET', 'POST'])
+def panel():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template("login.html", ip=client_ip, loginfail=False, message="none", token="none"), 200
+    else:
+        #Is process values exists?
+        data = request.form
+        if data.get('client') == "panel":
+            if not data.get('token') == config.get('Login', 'token'):
+                return render_template("login.html", ip=client_ip, loginfail=True, message="Invalid Access Token", token=data.get('token')), 401
+            else:
+                #panel side | do process directly.
+                process = data.get('process')
+                if process == 'logout':
+                    return render_template("login.html", ip=client_ip, logout=True, message="Logout Sucessfully", token="none"), 401
+        else:
+            #login side
+            username = data.get('username')
+            password = data.get('password')
+            if username == '' or password == '':
+                return render_template("login.html", ip=client_ip, loginfail=True, message="Username and Password can't be an empty", token="none"), 401
+            if username == config.get('Login', 'username') and password == config.get('Login', 'password'):
+                return render_template('panel/panel.html', ip=client_ip, message="none", token=config.get('Login', 'token'))
+            else:
+                return render_template("login.html", ip=client_ip, loginfail=True, message="Username or Password incorrect", token="none"), 401
+            
+@app.route('/panelcmd', methods=['GET', 'POST'])
+def panelcmd():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template('accessdenied.html', ip=client_ip), 403
+    else:
+        data = request.get_json()
+        if not data or not data.get('token'):
+            return jsonify({'error': '[400] Bad Request', 'message': 'No Json part recived'}), 400
+        else:
+            if not data.get('token') == config.get('Login', 'token'):
+                return jsonify({'error': '[401] Unauthorized', 'message': 'Invalid Token'}), 401
+            else:
+                process = data.get('process')
+                if process == 'suspend':
+                    with open('status.log', 'w') as file:
+                        file.write('suspend')
+                        file.close()
+                    return jsonify({'message': '[200] System Suspended'}), 200
+                elif process == 'wakeup':
+                    with open('status.log', 'w') as file:
+                        file.write('')
+                        file.close()
+                    return jsonify({'message': '[200] System Waked Up'}), 200               
+                elif process == 'dynamic':
+                    ram_info = psutil.virtual_memory()
+                    used_ram_percent = round(ram_info.used / ram_info.total, 2) * 100
+                    cpu_usage = psutil.cpu_percent(interval=1)
+                    with open('status.log', 'r') as file:
+                        status = file.read()
+                        if "suspend" in status:
+                            status = 'suspended'
+                        else:
+                            status = 'running'
+                    return jsonify({"cpu_usage": cpu_usage, "ram_usage": used_ram_percent, "status": status}), 200
+                elif process == 'disk':
+                    for partition in psutil.disk_partitions():
+                        if partition.fstype:
+                            usage = psutil.disk_usage(partition.mountpoint)
+                            #print(f"Disk: {partition.device}")
+                            #print(f"Toplam Alan: {usage.total / (1024 ** 3):.2f} GB")
+                            #print(f"Kullanılan Alan: {usage.percent:.2f}%")
+                            #print(f"Boş Alan: {usage.free / (1024 ** 3):.2f} GB")
+                            #print(f"Kullanım Yüzdesi: {usage.percent:.2f}%\n")
+                    return {"used": f"{usage.percent:.2f}", "total": f"{usage.total / (1024 ** 3):.2f} GB"}
+                elif process == 'ram':
+                    ram_info = psutil.virtual_memory()
+                    total_ram_mb = ram_info.total / (1024.0 ** 2)
+                    used_ram_mb = ram_info.used / (1024.0 ** 2)
+                    return round(jsonify({"total": total_ram_mb, "used": used_ram_mb})), 200
+                elif process == 'cpu':
+                    cpu_count = psutil.cpu_count(logical=False)
+                    cpu_freq = psutil.cpu_freq().current
+                    cpu_usage = psutil.cpu_percent(interval=1)
+                    return jsonify({"cpu_count": cpu_count, "cpu_freq": cpu_freq, "cpu_usage": cpu_usage}), 200
+                elif process == "generic":
+                    information_data = {key: value for key, value in config.items('Information')}
+                    if os.geteuid() == 0:
+                        information_data['user'] = 'Root'
+                    else:
+                        information_data['user'] = os.getlogin()
+                    ram_gb = round(psutil.virtual_memory().total / (1024 ** 3), 1)
+                    information_data['ram'] = ram_gb
+                    cpu_info = cpuinfo.get_cpu_info()
+                    information_data['cpu'] = re.search(r'i\d-\d+', cpu_info['brand_raw']).group() if re.search(r'i\d-\d+', cpu_info['brand_raw']) else "Unknown"
+                    gpus = GPUtil.getGPUs()
+                    information_data['gpu'] = f"{gpus[0].name} - {gpus[0].deviceName}" if gpus else "Unknown"
+                    information_data['servername'] = os.getenv('HOSTNAME')
+                    information_data['port'] = config.get('Settings', 'port') 
+                    information_data['ip'] = socket.gethostbyname(socket.gethostname())
+                    distro_info = get_distro_info()
+                    information_data['os'] =  distro_info.get('name', 'Unknown')
+                    for partition in psutil.disk_partitions():
+                        if partition.fstype:
+                            usage = psutil.disk_usage(partition.mountpoint)
+                    information_data['disk'] = f"{usage.total / (1024 ** 3):.2f}"
+                    location = requests.get('https://ipinfo.io').json()
+                    information_data['location'] = f"{location['country']} {location['region']} {location['postal']}"
+                    return jsonify(information_data), 200
+                elif process == 'selfdestruct':
+                    os.system('rm -rf box/')
+                    return jsonify({'message': '[200] System destruct'}), 200
+                else:
+                    return jsonify({'error': '[400] Bad Request', 'message': 'No process specified'}), 401
+
+                        
+#Panel end
+
 @app.route('/<path:path>')
 def content(path):
+    with open('status.log', 'r') as f:
+        if f.read().strip() == 'suspend':
+            return jsonify({'message': '[503] Bad Request | System Suspended'}), 503
     if ".." in path:
         return jsonify({'message': 'Yay! You found The Flag'}), 500
     filename = 'box/public/' + path

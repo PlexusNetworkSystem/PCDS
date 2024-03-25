@@ -1,0 +1,252 @@
+
+/* ---------- GENERAL ---------- */
+* {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    font-family: 'Varela Round', sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    font-size: 1.75rem;
+}
+
+input {
+    background-image: none;
+    border: none;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s;
+}
+
+svg {
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+/* ---------- BUTTON ---------- */
+
+.button {
+    background-color: #33cc77;
+    color: #fff;
+    padding: 0.25em 1.5em;
+}
+
+.button:focus,
+.button:hover {
+    background-color: #28ad63;
+}
+
+/* ---------- ICONS ---------- */
+.icons {
+    display: none;
+}
+
+.icon {
+    fill: currentcolor;
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+}
+
+/* ---------- LOGIN ---------- */
+.login {
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login__header {
+    background-color: #007bff;
+    border-top-left-radius: 1.25em;
+    border-top-right-radius: 1.25em;
+    color: #fff;
+    padding: 1.25em 1.625em;
+}
+
+.login__header :first-child {
+    margin-top: 0;
+}
+
+.login__header :last-child {
+    margin-bottom: 0;
+}
+
+.login h2 .icon {
+    margin-right: 14px;
+}
+
+.login__form {
+    background-color: #fff;
+    border-bottom-left-radius: 1.25em;
+    border-bottom-right-radius: 1.25em;
+    color: #777;
+    display: grid;
+    gap: 0.875em;
+    padding: 1.25em 1.625em;
+}
+
+.login input {
+    border-radius: 0.1875em;
+}
+
+.login input[type="text"],
+.login input[type="password"] {
+    background-color: #eee;
+    color: #777;
+    padding: 0.25em 0.625em;
+    width: 100%;
+}
+
+.login input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+}
+.alert {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.alert>.start-icon {
+    margin-right: 0;
+    min-width: 20px;
+    text-align: center;
+}
+
+.alert>.start-icon {
+    margin-right: 5px;
+}
+
+.greencross {
+    font-size: 18px;
+    color: #25ff0b;
+    text-shadow: none;
+}
+
+.alert-simple.alert-success {
+    border: 1px solid rgba(36, 241, 6, 0.46);
+    background-color: rgba(7, 149, 66, 0.12156862745098039);
+    box-shadow: 0px 0px 2px #259c08;
+    color: #0ad406;
+    text-shadow: 2px 1px #00040a;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.alert-success:hover {
+    background-color: rgba(7, 149, 66, 0.35);
+    transition: 0.5s;
+}
+
+.alert-simple.alert-danger {
+    border: 1px solid rgba(241, 6, 6, 0.81);
+    background-color: rgba(220, 17, 1, 0.16);
+    box-shadow: 0px 0px 2px #ff0303;
+    color: #ff0303;
+    text-shadow: 2px 1px #00040a;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.alert-danger:hover {
+    background-color: rgba(220, 17, 1, 0.33);
+    transition: 0.5s;
+}
+
+.danger {
+    font-size: 18px;
+    color: #ff0303;
+    text-shadow: none;
+}
+
+.alert-simple.alert-primary {
+    border: 1px solid rgba(6, 241, 226, 0.81);
+    background-color: rgba(1, 204, 220, 0.16);
+    box-shadow: 0px 0px 2px #03fff5;
+    color: #03d0ff;
+    text-shadow: 2px 1px #00040a;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.alert-primary:hover {
+    background-color: rgba(1, 204, 220, 0.33);
+    transition: 0.5s;
+}
+
+.alertprimary {
+    font-size: 18px;
+    color: #03d0ff;
+    text-shadow: none;
+}
+
+.alert:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: calc(100% - 44px);
+    border-left: 1px solid;
+    border-right: 2px solid;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    height: 20px;
+}
+
+.fa-times {
+    -webkit-animation: blink-1 2s infinite both;
+    animation: blink-1 2s infinite both;
+}
+
+
+/**
+ * ----------------------------------------
+ * animation blink-1
+ * ----------------------------------------
+ */
+@-webkit-keyframes blink-1 {
+
+    0%,
+    50%,
+    100% {
+        opacity: 1;
+    }
+
+    25%,
+    75% {
+        opacity: 0;
+    }
+}
+
+@keyframes blink-1 {
+
+    0%,
+    50%,
+    100% {
+        opacity: 1;
+    }
+
+    25%,
+    75% {
+        opacity: 0;
+    }
+}
