@@ -2,7 +2,7 @@
 
 # PCDS
 
-Content delivery System with API and Plexus system
+Content delivery System with API and Panel
 
 By a human to humanity
 
