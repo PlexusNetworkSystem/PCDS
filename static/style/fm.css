@@ -1,0 +1,48 @@
+
+
+.toolbox {
+	display: flex;
+	overflow-wrap: normal;
+	justify-content: center;
+}
+
+.toolbox div {
+    margin-bottom: 0 !important;
+}
+
+.tool {
+	font-size: 17px;
+	margin-inline: 7px !important;
+}
+
+.tool:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.tool span::before {
+	font-family: 'Material Symbols Outlined';
+	vertical-align: -20%;
+	font-weight: 400;
+	font-size: 25px;
+}
+
+.icon_create::before {content: "add";}
+.icon_copy::before {content: "content_copy";}
+.icon_move::before {content: "drag_pan";}
+.icon_download::before {content: "download";}
+.icon_upload::before {content: "upload";}
+.icon_delete::before {content: "delete";}
+.icon_rename::before {content: "edit";}
+.icon_edit::before {content: "edit_square";}
+.icon_show::before {content: "visibility";}
+.icon_extract::before {content: "zoom_out_map";}
+.icon_zip::before {content: "folder_zip";}
+
+.manager {
+    display: flex;
+}
+
+.file-tree {
+    width: 30%;
+}
