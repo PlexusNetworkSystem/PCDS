@@ -1,7 +1,6 @@
-import json, configparser, time, os, datetime, psutil, GPUtil, cpuinfo, re, socket, platform, requests, zipfile, shutil
-from flask import Flask, send_file, render_template, jsonify, request, redirect, session
-from flask.sessions import SecureCookieSessionInterface
-from lib.functions import log, totalLog, check_login, allowed_file, get_distro_info
+import json, configparser, time, os, datetime, psutil, requests
+from flask import Flask, send_file, render_template, jsonify, request, redirect
+from lib.functions import log, totalLog, check_login, allowed_file, get_distro_info, get_cpu_model_linux, get_ip, get_gpu_model_linux
 from datetime import timedelta
 from werkzeug.utils import secure_filename
 from lib.encryption import encrypt_file, decrypt_file, encrypt_data, decrypt_data, secure_compare, generate_sha512_hash, generate_sha256_hash
@@ -280,7 +279,6 @@ def apisystem(token):
             return jsonify({'message': 'Access denied! Invalid key.', 'response_time': response_time, 'IP': client_ip}), 401
 #api end
 
-
 #Panel
 
 @app.route('/selfdestruct/<tokenv>', methods=['GET', 'POST'])
@@ -394,15 +392,15 @@ def panelcmd():
                         information_data['user'] = 'Root'
                     else:
                         information_data['user'] = os.getlogin()
+                    
                     ram_gb = round(psutil.virtual_memory().total / (1024 ** 3), 1)
+                    usage = ""
                     information_data['ram'] = ram_gb
-                    cpu_info = cpuinfo.get_cpu_info()
-                    information_data['cpu'] = re.search(r'i\d-\d+', cpu_info['brand_raw']).group() if re.search(r'i\d-\d+', cpu_info['brand_raw']) else "Unknown"
-                    gpus = GPUtil.getGPUs()
-                    information_data['gpu'] = f"{gpus[0].name} - {gpus[0].deviceName}" if gpus else "Unknown"
+                    information_data['cpu'] = get_cpu_model_linux()
+                    information_data['gpu'] = get_gpu_model_linux()
                     information_data['servername'] = os.getenv('HOSTNAME')
                     information_data['port'] = config.get('Settings', 'port') 
-                    information_data['ip'] = socket.gethostbyname(socket.gethostname())
+                    information_data['ip'] = get_ip()
                     distro_info = get_distro_info()
                     information_data['os'] =  distro_info.get('name', 'Unknown')
                     for partition in psutil.disk_partitions():
@@ -418,7 +416,6 @@ def panelcmd():
                 else:
                     return jsonify({'error': '[400] Bad Request', 'message': 'No process specified'}), 401
 
-                        
 #Panel end
 
 @app.route('/<path:path>')
