@@ -20,6 +20,30 @@ function suspend() {
             console.error('Error:', error);
         });
 }
+
+function startConsole() {
+    fetch('/panelcmd', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            token: token,
+            process: 'startconsole'
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            const domain = window.location.hostname.split('.').slice(-2).join('.');
+            window.open(`http://console.${domain}/tkn/${data.access}`, '_blank');
+            console.log('Console started successfully');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+
 function wakeup() {
     fetch('/panelcmd', {
         method: 'POST',
@@ -96,6 +120,7 @@ setInterval(() => {
             document.getElementById('software_status').textContent = data.status;
         })
         .catch(error => {
+            document.getElementById('software_status').textContent = "Shutdown";
             console.error('Error:', error);
         });
 }, 1000);
