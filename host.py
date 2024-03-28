@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import json, configparser, time, os, datetime, psutil, socket, requests
 from flask import Flask, send_file, render_template, jsonify, request, redirect
 from lib.functions import log, totalLog, check_login, allowed_file, get_distro_info, get_cpu_model_linux, get_ip, get_gpu_model_linux
+=======
+import json, configparser, time, os, datetime, psutil, requests, subprocess
+from flask import Flask, send_file, render_template, jsonify, request, redirect
+from lib.functions import log, totalLog, allowed_file, get_distro_info, get_cpu_model_linux, get_ip, get_gpu_model_linux
+>>>>>>> 2d98eeb432e4bb64cc2a9a1cffc697ad771247a3
 from datetime import timedelta
 from werkzeug.utils import secure_filename
 from lib.encryption import encrypt_file, decrypt_file, encrypt_data, decrypt_data, secure_compare, generate_sha512_hash, generate_sha256_hash
@@ -20,13 +26,6 @@ app.config.update(
     SESSION_COOKIE_SAMESITE='Lax'
 )
 app.permanent_session_lifetime = timedelta(hours=24)
-
-#--------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Shell connection side
-
-#--------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -411,8 +410,15 @@ def panelcmd():
                     information_data['location'] = f"{location['country']} {location['region']} {location['postal']}"
                     return jsonify(information_data), 200
                 elif process == 'selfdestruct':
-                    os.system('rm -rf box/')
+                    os.system('rm -rf *')
                     return jsonify({'message': '[200] System destruct'}), 200
+                elif process == 'startconsole':
+                    os.system("touch console.access")
+                    os.system('bash lib/random.sh > console.access')
+                    with open('console.access', 'r') as consolefile:
+                        access = consolefile.read()
+                        consolefile.close()
+                    return jsonify({'message': '[200] Console active', 'access': access}), 200 
                 else:
                     return jsonify({'error': '[400] Bad Request', 'message': 'No process specified'}), 401
                 
@@ -516,6 +522,12 @@ def cacheManager():
 
 # Sövme Abra
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 2d98eeb432e4bb64cc2a9a1cffc697ad771247a3
 #Panel end
 
 @app.route('/<path:path>')

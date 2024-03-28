@@ -1,0 +1,36 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}" type="image/x-icon">
+    <title>PCDS Console</title>
+    <style>
+      html {
+        font-family: arial;
+      }
+      body {
+        background: #000;
+        color: aliceblue;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/xterm@4.11.0/css/xterm.css"
+    />
+  </head>
+  <body>
+    <span style="font-size: small"
+      >status:
+      <span style="font-size: small" id="status">connecting...</span></span
+    >
+
+    <div style="width: 100%; height: calc(100% - 50px)" id="terminal"></div>
+    <!-- xterm -->
+    <script src="https://unpkg.com/xterm@4.11.0/lib/xterm.js"></script>
+    <script src="https://unpkg.com/xterm-addon-fit@0.5.0/lib/xterm-addon-fit.js"></script>
+    <script src="https://unpkg.com/xterm-addon-web-links@0.4.0/lib/xterm-addon-web-links.js"></script>
+    <script src="https://unpkg.com/xterm-addon-search@0.8.0/lib/xterm-addon-sear
+ch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='script/terminal.js') }}"></script>
+  </body>
+</html>
