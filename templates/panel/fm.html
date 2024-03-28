@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/panel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/fm.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="main-panel">
+        <div class="header">
+            <h1>File Manager</h1>
+        </div>
+        <div class="main-board">
+            <div class="box toolbox">
+                <div class="tool cfile">
+                    <span class="icon_create">File</span>
+                </div>
+                <div class="tool cfolder">
+                    <span class="icon_create">Folder</span>
+                </div>
+                <div class="tool ccopy">
+                    <span class="icon_copy">Copy</span>
+                </div>
+                <div class="tool cmove">
+                    <span class="icon_move">Move</span>
+                </div>
+                <div class="tool cumload">
+                    <span class="icon_upload">Upload</span>
+                </div>
+                <div class="tool cownload">
+                    <span class="icon_download">Download</span>
+                </div>
+                <div class="tool celete">
+                    <span class="icon_delete">Delete</span>
+                </div>
+                <div class="tool cename">
+                    <span class="icon_rename">Rename</span>
+                </div>
+                <div class="tool cedit">
+                    <span class="icon_edit">Edit</span>
+                </div>
+                <div class="tool chow">
+                    <span class="icon_show">Show</span>
+                </div>
+                <div class="tool cextract">
+                    <span class="icon_extract">Extract</span>
+                </div>
+                <div class="tool czip">
+                    <span class="icon_zip">Compress</span>
+                </div>
+            </div>
+            <div class="manager">
+                <div class="file-tree">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

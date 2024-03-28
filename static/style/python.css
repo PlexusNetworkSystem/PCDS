@@ -1,0 +1,9 @@
+.create  {
+    background-color: #22223a;
+}
+
+.create::before {
+	font-family: 'Material Symbols Outlined';
+	content: 'add_circle';
+	vertical-align: bottom;
+}

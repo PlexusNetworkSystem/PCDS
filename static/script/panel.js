@@ -118,6 +118,11 @@ setInterval(() => {
             document.getElementById('ram_usage').textContent = data.ram_usage + '%';
             document.getElementById("ram_usage_bar").value = data.ram_usage;
             document.getElementById('software_status').textContent = data.status;
+            if (data.status === 'running') {
+                document.getElementById('software_status').style = 'background: green;';
+            } else {
+                document.getElementById('software_status').style = 'background: #a60000;';
+            }
         })
         .catch(error => {
             document.getElementById('software_status').textContent = "Shutdown";
@@ -145,3 +150,4 @@ setInterval(() => {
             console.error('Error:', error);
         });
 }, 5000);
+

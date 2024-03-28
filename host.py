@@ -415,8 +415,106 @@ def panelcmd():
                     return jsonify({'message': '[200] Console active', 'access': access}), 200 
                 else:
                     return jsonify({'error': '[400] Bad Request', 'message': 'No process specified'}), 401
+                
+@app.route('/panel/file-manager')
+def fileManager():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template('panel/fm.html', ip=client_ip, message="none", token=config.get('Login', 'token'))
 
+@app.route('/panel/python-app')
+def pythonApp():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template('panel/python.html', ip=client_ip, message="none", token=config.get('Login', 'token'))
+    
+@app.route('/panel/node-app')
+def nodeApplication():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template('panel/node.html', ip=client_ip, message="none", token=config.get('Login', 'token'))
 
+@app.route('/panel/php-app')
+def phpApplication():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template('panel/php.html', ip=client_ip, message="none", token=config.get('Login', 'token'))
+    
+@app.route('/panel/remote-terminal')
+def remoteTerminal():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template('panel/remote-terminal.html', ip=client_ip, message="none", token=config.get('Login', 'token'))
+
+@app.route('/panel/manage-api')
+def apiManager():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template('panel/api-manage.html', ip=client_ip, message="none", token=config.get('Login', 'token'))
+
+@app.route('/panel/cache-manager')
+def cacheManager():
+    #IP check side
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+    
+    if request.method == 'GET':
+        return render_template('panel/cache-manager.html', ip=client_ip, message="none", token=config.get('Login', 'token'))
+
+# Sövme Abra
 
 
 #Panel end

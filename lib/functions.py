@@ -62,4 +62,8 @@ def get_gpu_model_linux():
     except Exception as e:
         print(f"Error: {e}")
         return "Unknown"
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> 2d98eeb432e4bb64cc2a9a1cffc697ad771247a3
