@@ -43,6 +43,27 @@ function startConsole() {
         });
 }
 
+function filemanager() {
+    fetch('/panelcmd', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            token: token,
+            process: 'startfm'
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            const domain = window.location.hostname.split('.').slice(-2).join('.');
+            window.open(`http://fm.${domain}/tkn/${data.access}`, '_blank');
+            console.log('FileManager started successfully');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
 
 function wakeup() {
     fetch('/panelcmd', {

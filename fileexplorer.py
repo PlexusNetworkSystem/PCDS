@@ -20,12 +20,26 @@ app.config.update(
 app.permanent_session_lifetime = timedelta(hours=24)
 
 
-@app.route('/')
+@app.route("/")
 def root():
-    with open('status.log', 'r') as f:
-        if f.read().strip() == 'suspend':
-            return render_template("suspend.html"), 503
-    return render_template("welcome.html")
+    return render_template('accessdenied.html'), 403
+
+@app.route("/tkn/<access>", methods=['GET', 'POST'])
+def index(access):
+    if request.headers.getlist("X-Forwarded-For"):
+        client_ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        client_ip = request.remote_addr
+  
+    if client_ip in config.get('LoginBanned', 'IPS'):
+        return render_template('accessdenied.html', ip=client_ip), 403
+                        
+    with open('fm.access', 'r') as fmaccess:
+        accessfile = fmaccess.read()
+        if not access in accessfile:
+            return render_template("accessdenied.html", ip=client_ip), 403
+        os.system("echo '' > fm.access")
+    return render_template("panel/fm.html", ip=client_ip, token=config.get("Settings", "secret_key")) 
 
 
 if __name__ == '__main__':

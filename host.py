@@ -411,7 +411,14 @@ def panelcmd():
                     with open('console.access', 'r') as consolefile:
                         access = consolefile.read()
                         consolefile.close()
-                    return jsonify({'message': '[200] Console active', 'access': access}), 200 
+                    return jsonify({'message': '[200] Console active', 'access': access}), 200
+                elif process == 'startfm':
+                    os.system("touch fm.access")
+                    os.system('bash lib/random.sh > fm.access')
+                    with open('fm.access', 'r') as consolefile:
+                        access = consolefile.read()
+                        consolefile.close()
+                    return jsonify({'message': '[200] Filemanager active', 'access': access}), 200 
                 else:
                     return jsonify({'error': '[400] Bad Request', 'message': 'No process specified'}), 401
 
