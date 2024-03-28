@@ -64,7 +64,6 @@ def anim(chs):
         if f.read().strip() == 'suspend':
             return jsonify({'message': '[500] Bad Request | System Suspended'}), 503
     return render_template(f"animation/{chs}.html")
-
 #api
 @app.route('/api/<token>', methods=['POST'])
 def apisystem(token):
