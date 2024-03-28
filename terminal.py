@@ -160,8 +160,8 @@ def main():
         stream=sys.stdout,
         level=logging.DEBUG if args.debug else logging.INFO,
     )
-    logging.info(f"serving on http://{args.host}:{int(config.get('Settings', 'fileexplorerport'))}")
-    socketio.run(app, debug=True, port=int(config.get('Settings', 'fileexplorerport')), host=args.host)
+    logging.info(f"serving on http://{args.host}:{int(config.get('Settings', 'terminalport'))}")
+    socketio.run(app, debug=True, port=int(config.get('Settings', 'terminalport')), host=args.host)
 
 
 if __name__ == "__main__":
