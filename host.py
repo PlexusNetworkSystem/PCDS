@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import json, configparser, time, os, datetime, psutil, socket, requests
-from flask import Flask, send_file, render_template, jsonify, request, redirect
-from lib.functions import log, totalLog, check_login, allowed_file, get_distro_info, get_cpu_model_linux, get_ip, get_gpu_model_linux
-=======
 import json, configparser, time, os, datetime, psutil, requests, subprocess
 from flask import Flask, send_file, render_template, jsonify, request, redirect
 from lib.functions import log, totalLog, allowed_file, get_distro_info, get_cpu_model_linux, get_ip, get_gpu_model_linux
->>>>>>> 2d98eeb432e4bb64cc2a9a1cffc697ad771247a3
 from datetime import timedelta
 from werkzeug.utils import secure_filename
 from lib.encryption import encrypt_file, decrypt_file, encrypt_data, decrypt_data, secure_compare, generate_sha512_hash, generate_sha256_hash
@@ -522,12 +516,7 @@ def cacheManager():
 
 # Sövme Abra
 
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> 2d98eeb432e4bb64cc2a9a1cffc697ad771247a3
 #Panel end
 
 @app.route('/<path:path>')
